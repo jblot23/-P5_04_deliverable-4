@@ -1,0 +1,78 @@
+﻿@model EDDIESCARDEALAERSHIP.Models.CheckoutViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Checkout</h2>
+
+<div>
+    <h3>Payment Method</h3>
+    <form asp-action="Checkout" asp-controller="Payment" method="post">
+        <label for="paymentMethod">Select Payment Method:</label>
+        <select id="paymentMethod" name="paymentMethod">
+            <option value="debit">Debit Card</option>
+            <option value="credit">Credit Card</option>
+            <option value="financing">Financing</option>
+        </select>
+
+        <div id="debitCardDetails" style="display: none;">
+            <h3>Debit Card Details</h3>
+            <!-- Add input fields for debit card details -->
+            <label asp-for="CardNumber">Card Number:</label>
+            <input asp-for="CardNumber" />
+            <span asp-validation-for="CardNumber"></span>
+            <!-- Add more fields for card expiration, CVV, etc. -->
+        </div>
+
+        <div id="creditCardDetails" style="display: none;">
+            <h3>Credit Card Details</h3>
+            <!-- Add input fields for credit card details -->
+            <label asp-for="CardNumber">Card Number:</label>
+            <input asp-for="CardNumber" />
+            <span asp-validation-for="CardNumber"></span>
+            <!-- Add more fields for card expiration, CVV, etc. -->
+        </div>
+
+        <div id="financingDetails" style="display: none;">
+            <h3>Financing Details</h3>
+            <!-- Add input fields for financing details -->
+            <label asp-for="BankName">Bank Name:</label>
+            <input asp-for="BankName" />
+            <span asp-validation-for="BankName"></span>
+            <!-- Add more fields for account number, routing number, etc. -->
+        </div>
+
+        <button type="submit">Submit Payment</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script>
+        // Function to show/hide payment method details based on selected payment method
+        document.getElementById("paymentMethod").addEventListener("change", function () {
+            var selectedPaymentMethod = this.value;
+            var debitCardDetails = document.getElementById("debitCardDetails");
+            var creditCardDetails = document.getElementById("creditCardDetails");
+            var financingDetails = document.getElementById("financingDetails");
+
+            if (selectedPaymentMethod === "debit") {
+                debitCardDetails.style.display = "block";
+                creditCardDetails.style.display = "none";
+                financingDetails.style.display = "none";
+            } else if (selectedPaymentMethod === "credit") {
+                debitCardDetails.style.display = "none";
+                creditCardDetails.style.display = "block";
+                financingDetails.style.display = "none";
+            } else if (selectedPaymentMethod === "financing") {
+                debitCardDetails.style.display = "none";
+                creditCardDetails.style.display = "none";
+                financingDetails.style.display = "block";
+            } else {
+                debitCardDetails.style.display = "none";
+                creditCardDetails.style.display = "none";
+                financingDetails.style.display = "none";
+            }
+        });
+    </script>
+}
+

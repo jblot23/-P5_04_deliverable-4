@@ -1,0 +1,99 @@
+﻿@model List<Car>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Car Inventory</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            margin-right: 10px;
+        }
+
+        input {
+            padding: 5px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 5px 10px;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: 200px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        p {
+            margin: 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h2>Car Inventory</h2>
+    
+    <form method="get" action="@Url.Action("Index", "Home")">
+        <label for="minPrice">Min Price:</label>
+        <input type="number" name="minPrice" id="minPrice" />
+
+        <label for="maxPrice">Max Price:</label>
+        <input type="number" name="maxPrice" id="maxPrice" />
+
+        <button type="submit">Search</button>
+    </form>
+
+    <div class="card-container">
+        @foreach (var car in Model)
+        {
+            <div class="card">
+                <h3>@car.Make @car.Model (@car.Year)</h3>
+                <img src="@Url.Content("~/uploads/" + car.Photo)" />
+                <p>Price: $@car.SellingPrice</p>
+                @if(car.IsAvailable)
+                {
+                    <p>Availability: <span style="color:green">Available</span></p>
+                }
+                else
+                {
+                    <p>Availability: <span style="color:darkred;">Sold</span></p>
+                }
+            </div>
+        }
+    </div>
+</body>
+</html>
